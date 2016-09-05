@@ -2,7 +2,6 @@ package com.rnbutton;
 
 import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -40,7 +39,6 @@ public class ReactButtonManager extends SimpleViewManager<Button>
 			@Override
 			public void onClick(View v)
 			{
-				Log.i("3SC", "ON BUTTON CLICK");
 				ReactContext reactContext = (ReactContext) v.getContext();
 				EventDispatcher eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
 				eventDispatcher.dispatchEvent(new OnClickEvent(v.getId(), null));
@@ -75,6 +73,13 @@ public class ReactButtonManager extends SimpleViewManager<Button>
 	public void setText(Button button, @Nullable String title)
 	{
 		button.setText(title);
+	}
+
+	@ReactProp(name = "textAllCaps",
+	           defaultBoolean = true)
+	public void setTextAllCaps(Button button, boolean allCaps)
+	{
+		button.setAllCaps(allCaps);
 	}
 
 	@ReactProp(name = "textColor",
