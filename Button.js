@@ -8,6 +8,7 @@ const Button = React.createClass({
 	propTypes: {
 		...View.propTypes,
 		title: React.PropTypes.string.isRequired,
+		textAllCaps: React.PropTypes.bool,
 		style: Text.propTypes.style,
 		onPress: React.PropTypes.func,
 		enabled: React.PropTypes.bool,
@@ -23,31 +24,41 @@ const Button = React.createClass({
 	},
 
 	render() {
-		const props = {
-			...this.props
-		};
-
-		if (this.props.style) {
-			if (this.props.style.color) {
-				props.textColor = Platform.OS === "ios" ? processColor(this.props.style.color) : this.props.style.color;
-			}
-			if (this.props.style.backgroundColor) {
-				props.backgroundColor = Platform.OS === "ios" ? processColor(this.props.style.backgroundColor) : this.props.style.backgroundColor;
-			}
-			if (this.props.style.textAllCaps) {
-				props.textAllCaps = this.props.style.textAllCaps;
-			}
-		}
-
 		if (Platform.OS === "android") {
 			return (
-				<ButtonNative {...props} onChange={this._onPress}/>
+				<ButtonNative {...this.props} onChange={this._onPress}/>
 			);
 		} else if (Platform.OS === "ios") {
-			props.onStartShouldSetResponder = (event) => true;
-			props.onMoveShouldSetResponder = (event) => true;
+
+			const passProps = {
+				...this.props
+			};
+
+			const flattenedStyle = StyleSheet.flatten(this.props.style);
+
+			if (flattenedStyle) {
+				if (flattenedStyle.color) {
+					passProps.textColor = processColor(flattenedStyle.color);
+				}
+				if (flattenedStyle.backgroundColor) {
+					passProps.backgroundColor = processColor(flattenedStyle.backgroundColor);
+				}
+				if (flattenedStyle.fontFamily) {
+					passProps.fontFamily = flattenedStyle.fontFamily;
+				}
+				if (flattenedStyle.fontWeight) {
+					passProps.fontWeight = flattenedStyle.fontWeight;
+				}
+			}
+
+			if (props.textAllCaps && passProps.title) {
+				passProps.title = passProps.title.toUpperCase();
+			}
+
+			passProps.onStartShouldSetResponder = (event) => true;
+			passProps.onMoveShouldSetResponder = (event) => true;
 			return (
-				<ButtonNative {...props} onPress={this._onPress}/>
+				<ButtonNative {...passProps} onPress={this._onPress}/>
 			);
 		}
 	}
@@ -58,9 +69,7 @@ var ButtonNative = null;
 if (Platform.OS === "android") {
 	ButtonNative = requireNativeComponent('RNButton', Button, {
 		nativeOnly: {
-			backgroundColor: true,
-			textAllCaps: true,
-			textColor: true
+			textAllCaps: true
 		}
 	});
 } else if (Platform.OS === "ios") {

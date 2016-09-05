@@ -1,6 +1,8 @@
 package com.rnbutton;
 
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewProps;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.EventDispatcher;
+import com.facebook.react.views.text.ReactFontManager;
 
 public class ReactButtonManager extends SimpleViewManager<Button>
 {
@@ -62,11 +65,28 @@ public class ReactButtonManager extends SimpleViewManager<Button>
 		button.setBackgroundColor(bgColor);
 	}
 
+	@ReactProp(name = "color",
+	           defaultInt = Color.BLACK,
+	           customType = "Color")
+	public void setColor(Button button, int textColor)
+	{
+		button.setTextColor(textColor);
+	}
+
 	@ReactProp(name = ViewProps.ENABLED,
 	           defaultBoolean = true)
 	public void setEnabled(Button button, boolean enabled)
 	{
 		button.setEnabled(enabled);
+	}
+
+	@ReactProp(name = "fontFamily")
+	public void setFontFamily(Button button, String fontFamily)
+	{
+		AssetManager assetManager = button.getContext().getAssets();
+		Typeface typeface = ReactFontManager.getInstance().getTypeface(fontFamily, button.getTypeface().getStyle(), assetManager);
+		button.setTypeface(typeface);
+		assetManager.close();
 	}
 
 	@ReactProp(name = "title")
@@ -80,13 +100,5 @@ public class ReactButtonManager extends SimpleViewManager<Button>
 	public void setTextAllCaps(Button button, boolean allCaps)
 	{
 		button.setAllCaps(allCaps);
-	}
-
-	@ReactProp(name = "textColor",
-	           defaultInt = Color.BLACK,
-	           customType = "Color")
-	public void setTextColor(Button button, int textColor)
-	{
-		button.setTextColor(textColor);
 	}
 }
