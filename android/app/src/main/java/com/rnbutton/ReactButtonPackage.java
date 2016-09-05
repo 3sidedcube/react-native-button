@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class RNButtonPackage implements ReactPackage
+public class ReactButtonPackage implements ReactPackage
 {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext)
@@ -27,6 +27,6 @@ public class RNButtonPackage implements ReactPackage
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext)
     {
-        return Arrays.<ViewManager>asList(new RNButtonManager());
+        return Arrays.<ViewManager>asList(new ReactButtonManager());
     }
 }

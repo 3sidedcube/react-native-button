@@ -12,13 +12,13 @@ import com.facebook.react.uimanager.LayoutShadowNode;
 /**
  * Created by tim on 19/08/2016.
  */
-public class RNButtonNode extends LayoutShadowNode implements CSSNode.MeasureFunction
+public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNode.MeasureFunction
 {
 	private int mWidth;
 	private int mHeight;
 	private boolean mMeasured;
 
-	public RNButtonNode()
+	public ReactButtonShadowNode()
 	{
 		setMeasureFunction(this);
 	}
