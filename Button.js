@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from "react";
-import {processColor, requireNativeComponent, Platform, Text, View} from 'react-native';
+import {processColor, requireNativeComponent, Platform, StyleSheet, Text, View} from 'react-native';
 
 const Button = React.createClass({
 
