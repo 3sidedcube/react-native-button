@@ -1,6 +1,6 @@
 {
-	"name": "react-native-button",
+	"name": "react-native-platform-button",
 	"version": "0.0.1",
-	"keywords": "react-native",
+	"keywords": "react-native,button",
 	"main": "index.js"
 }
