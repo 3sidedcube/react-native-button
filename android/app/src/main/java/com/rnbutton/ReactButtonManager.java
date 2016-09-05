@@ -86,7 +86,6 @@ public class ReactButtonManager extends SimpleViewManager<Button>
 		AssetManager assetManager = button.getContext().getAssets();
 		Typeface typeface = ReactFontManager.getInstance().getTypeface(fontFamily, button.getTypeface().getStyle(), assetManager);
 		button.setTypeface(typeface);
-		assetManager.close();
 	}
 
 	@ReactProp(name = "title")
