@@ -64,16 +64,6 @@ const Button = React.createClass({
 	}
 });
 
-var ButtonNative = null;
-
-if (Platform.OS === "android") {
-	ButtonNative = requireNativeComponent('RNButton', Button, {
-		nativeOnly: {
-			textAllCaps: true
-		}
-	});
-} else if (Platform.OS === "ios") {
-	ButtonNative = requireNativeComponent('RNButton', Button);
-}
+var ButtonNative = requireNativeComponent('RNButton', Button);
 
 module.exports = Button;
