@@ -10,7 +10,7 @@
 #import "RNButton.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
-#import "RCTConvert.h"
+#import "RCTFont.h"
 
 @implementation RNButtonManager
 
@@ -20,19 +20,19 @@ RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY(fontSize, CGFloat, RNButton)
 {
-    view.font = [RCTConvert UIFont:view.font withSize:json ?: @(defaultView.font.pointSize)];
+    view.font = [RCTFont updateFont:view.font withSize:json ?: @(defaultView.font.pointSize)];
 }
 RCT_CUSTOM_VIEW_PROPERTY(fontWeight, NSString, RNButton)
 {
-    view.font = [RCTConvert UIFont:view.font withWeight:json]; // defaults to normal
+    view.font = [RCTFont updateFont:view.font withWeight:json]; // defaults to normal
 }
 RCT_CUSTOM_VIEW_PROPERTY(fontStyle, NSString, RNButton)
 {
-    view.font = [RCTConvert UIFont:view.font withStyle:json]; // defaults to normal
+    view.font = [RCTFont updateFont:view.font withStyle:json]; // defaults to normal
 }
 RCT_CUSTOM_VIEW_PROPERTY(fontFamily, NSString, RNButton)
 {
-    view.font = [RCTConvert UIFont:view.font withFamily:json ?: defaultView.font.familyName];
+    view.font = [RCTFont updateFont:view.font withFamily:json ?: defaultView.font.familyName];
 }
 
 RCT_EXPORT_MODULE()
