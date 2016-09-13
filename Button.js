@@ -51,7 +51,7 @@ const Button = React.createClass({
 				}
 			}
 
-			if (props.textAllCaps && passProps.title) {
+			if (passProps.textAllCaps && passProps.title) {
 				passProps.title = passProps.title.toUpperCase();
 			}
 
