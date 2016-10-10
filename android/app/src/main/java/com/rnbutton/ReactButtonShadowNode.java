@@ -5,14 +5,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.facebook.csslayout.CSSMeasureMode;
-import com.facebook.csslayout.CSSNode;
+import com.facebook.csslayout.CSSNodeAPI;
 import com.facebook.csslayout.MeasureOutput;
 import com.facebook.react.uimanager.LayoutShadowNode;
 
 /**
  * Created by tim on 19/08/2016.
  */
-public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNode.MeasureFunction
+public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNodeAPI.MeasureFunction
 {
 	private int mWidth;
 	private int mHeight;
@@ -24,7 +24,7 @@ public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNode.M
 	}
 
 	@Override
-	public void measure(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput)
+	public void measure(CSSNodeAPI node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput)
 	{
 		if (!mMeasured)
 		{

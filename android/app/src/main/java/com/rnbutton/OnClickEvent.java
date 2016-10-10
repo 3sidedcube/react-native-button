@@ -14,7 +14,7 @@ public class OnClickEvent extends Event<OnClickEvent>
 
 	public OnClickEvent(int viewId, WritableMap eventData)
 	{
-		super(viewId, System.currentTimeMillis());
+		super(viewId);
 		mEventData = eventData;
 	}
 
