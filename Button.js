@@ -24,6 +24,7 @@ const Button = React.createClass({
 	},
 
 	render() {
+
 		if (Platform.OS === "android") {
 			return (
 				<ButtonNative {...this.props} onChange={this._onPress}/>
@@ -41,7 +42,7 @@ const Button = React.createClass({
 					passProps.textColor = processColor(flattenedStyle.color);
 				}
 				if (flattenedStyle.backgroundColor) {
-					passProps.backgroundColor = processColor(flattenedStyle.backgroundColor);
+					passProps.backgroundColor = flattenedStyle.backgroundColor;
 				}
 				if (flattenedStyle.fontFamily) {
 					passProps.fontFamily = flattenedStyle.fontFamily;
