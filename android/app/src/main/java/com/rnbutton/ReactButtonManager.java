@@ -95,7 +95,7 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 	public void setEnabled(AppCompatButton button, boolean enabled)
 	{
 		button.setEnabled(enabled);
-		button.setAlpha(0.3f);
+		button.setAlpha(enabled ? 1f : 0.3f);
 	}
 
 	@ReactProp(name = "fontFamily")
