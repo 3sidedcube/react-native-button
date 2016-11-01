@@ -1,5 +1,6 @@
 package com.rnbutton;
 
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,7 +29,7 @@ public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNodeAP
 	{
 		if (!mMeasured)
 		{
-			Button nodeView = new Button(getThemedContext());
+			AppCompatButton nodeView = new AppCompatButton(getThemedContext());
 			final int spec = View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED);
 			nodeView.measure(spec, spec);
 			mWidth = nodeView.getMeasuredWidth();
