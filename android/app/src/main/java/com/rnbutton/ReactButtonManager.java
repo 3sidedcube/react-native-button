@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatButton;
@@ -79,7 +80,19 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 	           customType = "Color")
 	public void setBackgroundColor(AppCompatButton button, int bgColor)
 	{
-		ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(bgColor));
+		if (bgColor == Color.TRANSPARENT && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+		{
+			button.setBackgroundResource(R.drawable.btn_borderless_material);
+		}
+		else
+		{
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+			{
+				button.setBackgroundResource(R.drawable.btn_default_material);
+			}
+
+			ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(bgColor));
+		}
 	}
 
 	@ReactProp(name = "color",
