@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.react.bridge.ReactContext;
@@ -41,7 +42,17 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 	@Override
 	public AppCompatButton createViewInstance(ThemedReactContext context)
 	{
-		AppCompatButton button = new AppCompatButton(context);
+		AppCompatButton button;
+		try
+		{
+			button = new AppCompatButton(context);
+		}
+		catch (Exception ex)
+		{
+			Log.e("3SC", "Unexpected error when creating button", ex);
+			return null;
+		}
+
 		button.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
