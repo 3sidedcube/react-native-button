@@ -1,7 +1,6 @@
 package com.rnbutton;
 
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,28 +24,18 @@ public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNodeAP
 	}
 
 	@Override
-	public void measure(CSSNodeAPI node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput)
+	public long measure(CSSNodeAPI node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
 	{
 		if (!mMeasured)
 		{
-			AppCompatButton nodeView;
-			try
-			{
-				nodeView = new AppCompatButton(getThemedContext());
-			}
-			catch (Exception ex)
-			{
-				Log.e("3SC", "Unexpected error when creating button", ex);
-				return;
-			}
-
+			AppCompatButton nodeView = new AppCompatButton(getThemedContext());
 			final int spec = View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED);
 			nodeView.measure(spec, spec);
 			mWidth = nodeView.getMeasuredWidth();
 			mHeight = nodeView.getMeasuredHeight();
 			mMeasured = true;
 		}
-		measureOutput.width = mWidth;
-		measureOutput.height = mHeight;
+
+		return MeasureOutput.make(mWidth, mHeight);
 	}
 }
