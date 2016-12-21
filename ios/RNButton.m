@@ -22,4 +22,14 @@
     [self setAttributedTitle:[[NSAttributedString alloc] initWithString:self.title ? : @"" attributes:@{NSFontAttributeName: _font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]], NSForegroundColorAttributeName: self.textColor}] forState:UIControlStateNormal];
 }
 
+- (void)setEnabled:(BOOL)enabled
+{
+    [super setEnabled:enabled];
+    if (enabled) {
+        self.alpha = 1.0;
+    } else {
+        self.alpha = 0.3;
+    }
+}
+
 @end
