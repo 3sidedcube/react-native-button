@@ -28,7 +28,14 @@ public class ReactButtonShadowNode extends LayoutShadowNode implements CSSNodeAP
 	{
 		if (!mMeasured)
 		{
-			AppCompatButton nodeView = new AppCompatButton(getThemedContext());
+			AppCompatButton nodeView = null;
+
+			// Attempt to fix: https://github.com/facebook/react-native/issues/9979 (see my comment there)
+			synchronized (getThemedContext())
+			{
+				nodeView = new AppCompatButton(getThemedContext());
+			}
+
 			final int spec = View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED);
 			nodeView.measure(spec, spec);
 			mWidth = nodeView.getMeasuredWidth();
