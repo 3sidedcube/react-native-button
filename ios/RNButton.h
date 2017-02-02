@@ -1,6 +1,6 @@
 @import UIKit;
 
-#import "RCTComponent.h"
+#import <React/RCTComponent.h>
 
 @interface RNButton : UIButton
 

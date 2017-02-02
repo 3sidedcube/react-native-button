@@ -8,9 +8,9 @@
 
 #import "RNButtonManager.h"
 #import "RNButton.h"
-#import "RCTBridge.h"
-#import "RCTEventDispatcher.h"
-#import "RCTFont.h"
+#import <React/RCTBridge.h>
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTFont.h>
 
 @implementation RNButtonManager
 
