@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* RNButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* RNButton.m */; };
 		B15C8C291CE334BD001601A4 /* RNButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B15C8C281CE334BD001601A4 /* RNButtonManager.m */; };
+		B1D92F911E5EF91700A985F0 /* RNShadowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D92F901E5EF91700A985F0 /* RNShadowButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,8 @@
 		13BE3DED1AC21097009241FE /* RNButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNButton.m; sourceTree = "<group>"; };
 		B15C8C271CE334BD001601A4 /* RNButtonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNButtonManager.h; sourceTree = "<group>"; };
 		B15C8C281CE334BD001601A4 /* RNButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNButtonManager.m; sourceTree = "<group>"; };
+		B1D92F8F1E5EF91700A985F0 /* RNShadowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNShadowButton.h; sourceTree = "<group>"; };
+		B1D92F901E5EF91700A985F0 /* RNShadowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNShadowButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,8 @@
 				B15C8C281CE334BD001601A4 /* RNButtonManager.m */,
 				13BE3DEC1AC21097009241FE /* RNButton.h */,
 				13BE3DED1AC21097009241FE /* RNButton.m */,
+				B1D92F8F1E5EF91700A985F0 /* RNShadowButton.h */,
+				B1D92F901E5EF91700A985F0 /* RNShadowButton.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 			files = (
 				B15C8C291CE334BD001601A4 /* RNButtonManager.m in Sources */,
 				13BE3DEE1AC21097009241FE /* RNButton.m in Sources */,
+				B1D92F911E5EF91700A985F0 /* RNShadowButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

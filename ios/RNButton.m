@@ -11,7 +11,7 @@
 - (void)setTextColor:(UIColor *)textColor
 {
     _textColor = textColor;
-    [self setAttributedTitle:[[NSAttributedString alloc] initWithString:self.title ? : @"" attributes:@{NSFontAttributeName: self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]], NSForegroundColorAttributeName: self.textColor}] forState:UIControlStateNormal];
+    [self setAttributedTitle:[[NSAttributedString alloc] initWithString:self.title ? : @"" attributes:@{NSFontAttributeName: self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]], NSForegroundColorAttributeName: textColor}] forState:UIControlStateNormal];
 }
 
 - (void)setFont:(UIFont *)font
