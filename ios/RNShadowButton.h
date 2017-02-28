@@ -26,4 +26,12 @@
 
 @property (nonatomic, strong) UIFont *font;
 
+@property (nonatomic, strong) id image;
+
+@property (nonatomic, assign) UIEdgeInsets titleInsets;
+
+@property (nonatomic, assign) UIEdgeInsets imageInsets;
+
+@property (nonatomic, copy) NSString *imageAlignment;
+
 @end

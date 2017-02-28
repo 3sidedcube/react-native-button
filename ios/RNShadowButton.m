@@ -92,16 +92,23 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
     [applierBlocks addObject:^(NSDictionary<NSNumber *, UIView *> *viewRegistry) {
         
         RNButton *button = (RNButton *)viewRegistry[self.reactTag];
-        button.onPress = self.onPress;
+        button.onPress = welf.onPress;
         if (welf.font) {
-            button.font = self.font;
+            button.font = welf.font;
         }
         if (welf.textColor) {
-            button.textColor = self.textColor;
+            button.textColor = welf.textColor;
         }
         if (welf.title) {
-            button.title = self.title;
+            button.title = welf.title;
         }
+        if (welf.image) {
+            button.image = [RCTConvert UIImage:welf.image];
+        }
+        button.titleEdgeInsets = welf.titleInsets;
+        button.imageEdgeInsets = welf.imageInsets;
+        button.imageAlignment = welf.imageAlignment;
+        button.padding = padding;
     }];
     
     return parentProperties;
@@ -129,6 +136,32 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
 {
     _onPress = onPress;
     [self.button setOnPress:onPress];
+}
+
+- (void)setImage:(id)image
+{
+    _image = image;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.button.image = [RCTConvert UIImage:image];
+    });
+}
+
+- (void)setImageInsets:(UIEdgeInsets)imageInsets
+{
+    _imageInsets = imageInsets;
+    self.button.imageEdgeInsets = imageInsets;
+}
+
+- (void)setTitleInsets:(UIEdgeInsets)titleInsets
+{
+    _titleInsets = titleInsets;
+    self.button.titleEdgeInsets = titleInsets;
+}
+
+- (void)setImageAlignment:(NSString *)imageAlignment
+{
+    _imageAlignment = imageAlignment;
+    self.button.imageAlignment = imageAlignment;
 }
 
 @end
