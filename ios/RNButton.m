@@ -32,4 +32,28 @@
     }
 }
 
+- (void)setImage:(UIImage *)image
+{
+    _image = image;
+    [self setImage:image forState:UIControlStateNormal];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    if ([self.imageAlignment isEqualToString:@"left"]) {
+        
+        self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        CGRect availableSpace = UIEdgeInsetsInsetRect(self.bounds, self.contentEdgeInsets);
+        CGFloat availableWidth = availableSpace.size.width + self.imageEdgeInsets.right - (self.imageView ? self.imageView.frame.size.width : 0) - (self.titleLabel ? self.titleLabel.frame.size.width : 0);
+        self.contentEdgeInsets = self.padding;
+        self.titleEdgeInsets = UIEdgeInsetsMake(0, availableWidth/2, 0, 0);
+        
+    } else {
+        
+        self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    }
+}
+
 @end

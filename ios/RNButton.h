@@ -12,4 +12,10 @@
 
 @property (nonatomic, strong) UIFont *font;
 
+@property (nonatomic, strong) UIImage *image;
+
+@property (nonatomic, copy) NSString *imageAlignment;
+
+@property (nonatomic, assign) UIEdgeInsets padding;
+
 @end

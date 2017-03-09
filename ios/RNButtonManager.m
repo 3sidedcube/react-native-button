@@ -11,6 +11,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTEventDispatcher.h>
 #import <React/RCTFont.h>
+#import <React/RCTConvert.h>
 #import "RNShadowButton.h"
 
 @implementation RNButtonManager
@@ -20,7 +21,17 @@ RCT_EXPORT_VIEW_PROPERTY(enabled, BOOL)
 RCT_EXPORT_SHADOW_PROPERTY(title, NSString *)
 RCT_EXPORT_SHADOW_PROPERTY(textColor, UIColor *)
 RCT_EXPORT_SHADOW_PROPERTY(onPress, RCTBubblingEventBlock)
+RCT_EXPORT_SHADOW_PROPERTY(image, id);
+RCT_EXPORT_SHADOW_PROPERTY(imageAlignment, NSString *);
 
+RCT_CUSTOM_SHADOW_PROPERTY(imageInsets, UIEdgeInsets, RNShadowButton)
+{
+    view.imageInsets = [RCTConvert UIEdgeInsets:json];
+}
+RCT_CUSTOM_SHADOW_PROPERTY(titleInsets, UIEdgeInsets, RNShadowButton)
+{
+    view.titleInsets = [RCTConvert UIEdgeInsets:json];
+}
 RCT_CUSTOM_SHADOW_PROPERTY(fontSize, CGFloat, RNShadowButton)
 {
     view.font = [RCTFont updateFont:view.font withSize:json ?: @([UIFont systemFontSize])];
@@ -46,6 +57,11 @@ RCT_EXPORT_MODULE()
     button.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     [button addTarget:self action:@selector(handleButtonPress:) forControlEvents:UIControlEventTouchUpInside];
     return button;
+}
+
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
 }
 
 - (RCTShadowView *)shadowView

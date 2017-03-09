@@ -29,12 +29,12 @@ public class ReactButtonShadowNode extends LayoutShadowNode implements YogaMeasu
 	{
 		if (!mMeasured)
 		{
-			AppCompatButton nodeView = null;
+			ReactButton nodeView = null;
 
 			// Attempt to fix: https://github.com/facebook/react-native/issues/9979 (see my comment there)
 			synchronized (getThemedContext())
 			{
-				nodeView = new AppCompatButton(getThemedContext());
+				nodeView = new ReactButton(getThemedContext());
 			}
 
 			final int spec = View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED);
