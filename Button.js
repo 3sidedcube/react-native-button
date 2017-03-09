@@ -27,7 +27,7 @@ const Button = React.createClass({
 		image: ImageSourcePropType,
 
 		/**
-		 * The insets for the image on the button
+		 * The insets for the image on the button. iOS only
 		 */
 		imageInsets: React.PropTypes.shape({
 			bottom: React.PropTypes.number,
@@ -47,7 +47,7 @@ const Button = React.createClass({
 		textAllCaps: React.PropTypes.bool,
 
 		/**
-		 * The insets for the title of the button
+		 * The insets for the title of the button. iOS only
 		 */
 		titleInsets: React.PropTypes.shape({
 			bottom: React.PropTypes.number,
@@ -88,10 +88,12 @@ const Button = React.createClass({
 	},
 
 	render() {
+		const resolvedImage = this.props.image ? resolveAssetSource(this.props.image) : undefined;
 
 		if (Platform.OS === "android") {
+			const iconLeft = this.props.imageAlignment === "left" ? resolvedImage : undefined;
 			return (
-				<ButtonNative {...this.props} onChange={this._onPress}/>
+				<ButtonNative {...this.props} iconLeft={iconLeft} onChange={this._onPress}/>
 			);
 		} else if (Platform.OS === "ios") {
 
@@ -100,7 +102,7 @@ const Button = React.createClass({
 			};
 
 			if (passProps.image) {
-				passProps.image = resolveAssetSource(passProps.image);
+				passProps.image = resolvedImage;
 			}
 
 			const flattenedStyle = StyleSheet.flatten(this.props.style);
@@ -143,7 +145,11 @@ if (Platform.OS === "ios") {
   		}
 	});
 } else if (Platform.OS === "android") {
-	var ButtonNative = requireNativeComponent('RNButton', Button);
+	var ButtonNative = requireNativeComponent('RNButton', Button, {
+		nativeOnly: {
+			iconLeft: true
+		}
+	});
 }
 
 module.exports = Button;
