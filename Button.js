@@ -91,7 +91,7 @@ const Button = React.createClass({
 		const resolvedImage = this.props.image ? resolveAssetSource(this.props.image) : undefined;
 
 		if (Platform.OS === "android") {
-			const iconLeft = this.props.imageAlignment === "left" ? resolvedImage : undefined;
+			const iconLeft = resolvedImage;
 			return (
 				<ButtonNative {...this.props} iconLeft={iconLeft} onChange={this._onPress}/>
 			);
