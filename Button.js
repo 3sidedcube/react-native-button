@@ -93,7 +93,12 @@ const Button = React.createClass({
 		if (Platform.OS === "android") {
 			const iconLeft = resolvedImage;
 			return (
-				<ButtonNative {...this.props} iconLeft={iconLeft} onChange={this._onPress}/>
+				<ButtonNative
+					{...this.props}
+					iconLeft={iconLeft}
+					onChange={this._onPress}
+					onStartShouldSetResponder={() => true}
+				/>
 			);
 		} else if (Platform.OS === "ios") {
 
