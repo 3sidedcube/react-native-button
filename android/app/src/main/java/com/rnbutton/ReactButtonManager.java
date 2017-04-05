@@ -26,6 +26,16 @@ public class ReactButtonManager extends SimpleViewManager<ReactButton>
 {
 	public static final String REACT_CLASS = "RNButton";
 
+	private static final int[][] PRE_LOLLIPOP_BUTTON_STATES = {new int[]{android.R.attr.state_pressed}, new int[]{}};
+
+	private static int darken(int color, double factor)
+	{
+		return Color.argb(Color.alpha(color),
+		                  Math.max((int) (Color.red(color) * factor), 0),
+		                  Math.max((int) (Color.green(color) * factor), 0),
+		                  Math.max((int) (Color.blue(color) * factor), 0));
+	}
+
 	@Override
 	public String getName()
 	{
@@ -96,9 +106,13 @@ public class ReactButtonManager extends SimpleViewManager<ReactButton>
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 			{
 				button.setBackgroundResource(R.drawable.btn_default_material);
+				ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(bgColor));
 			}
-
-			ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(bgColor));
+			else
+			{
+				int[] colors = {darken(bgColor, 0.8d), bgColor};
+				ViewCompat.setBackgroundTintList(button, new ColorStateList(PRE_LOLLIPOP_BUTTON_STATES, colors));
+			}
 		}
 	}
 
