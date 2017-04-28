@@ -92,25 +92,30 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
     [applierBlocks addObject:^(NSDictionary<NSNumber *, UIView *> *viewRegistry) {
         
         RNButton *button = (RNButton *)viewRegistry[self.reactTag];
-        button.onPress = welf.onPress;
-        if (welf.font) {
-            button.font = welf.font;
-        }
-        if (welf.textColor) {
-            button.textColor = welf.textColor;
-        }
-        if (welf.title) {
-            button.title = welf.title;
-        }
-        if (welf.image) {
-            button.image = [RCTConvert UIImage:welf.image];
-        } else {
-            button.image = nil;
-        }
-        button.titleEdgeInsets = welf.titleInsets;
-        button.imageEdgeInsets = welf.imageInsets;
-        button.imageAlignment = welf.imageAlignment;
-        button.padding = padding;
+        
+        [UIView transitionWithView:button duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+
+            button.onPress = welf.onPress;
+            if (welf.font) {
+                button.font = welf.font;
+            }
+            if (welf.textColor) {
+                button.textColor = welf.textColor;
+            }
+            if (welf.title) {
+                button.title = welf.title;
+            }
+            if (welf.image) {
+                button.image = [RCTConvert UIImage:welf.image];
+            } else {
+                button.image = nil;
+            }
+            button.titleEdgeInsets = welf.titleInsets;
+            button.imageEdgeInsets = welf.imageInsets;
+            button.imageAlignment = welf.imageAlignment;
+            button.padding = padding;
+            
+        } completion:nil];
     }];
     
     return parentProperties;
