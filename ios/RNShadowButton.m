@@ -104,6 +104,8 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
         }
         if (welf.image) {
             button.image = [RCTConvert UIImage:welf.image];
+        } else {
+            button.image = nil;
         }
         button.titleEdgeInsets = welf.titleInsets;
         button.imageEdgeInsets = welf.imageInsets;
