@@ -154,6 +154,8 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
     _image = image;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.button.image = [RCTConvert UIImage:image];
+        YGNodeMarkDirty(self.cssNode);
+        [self.button setNeedsLayout];
         [self dirtyPropagation];
     });
 }
