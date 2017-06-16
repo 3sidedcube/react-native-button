@@ -56,6 +56,7 @@ RCT_EXPORT_MODULE()
     button.textColor = [UIColor blackColor];
     button.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     [button addTarget:self action:@selector(handleButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+    button.titleLabel.adjustsFontSizeToFitWidth = true;
     return button;
 }
 
