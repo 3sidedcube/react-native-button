@@ -9,10 +9,10 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.LayoutShadowNode;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -22,9 +22,19 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.react.views.text.ReactFontManager;
 
-public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
+public class ReactButtonManager extends SimpleViewManager<ReactButton>
 {
 	public static final String REACT_CLASS = "RNButton";
+
+	private static final int[][] PRE_LOLLIPOP_BUTTON_STATES = {new int[]{android.R.attr.state_pressed}, new int[]{}};
+
+	private static int darken(int color, double factor)
+	{
+		return Color.argb(Color.alpha(color),
+		                  Math.max((int) (Color.red(color) * factor), 0),
+		                  Math.max((int) (Color.green(color) * factor), 0),
+		                  Math.max((int) (Color.blue(color) * factor), 0));
+	}
 
 	@Override
 	public String getName()
@@ -39,14 +49,14 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 	}
 
 	@Override
-	public AppCompatButton createViewInstance(ThemedReactContext context)
+	public ReactButton createViewInstance(ThemedReactContext context)
 	{
-		AppCompatButton button = null;
+		ReactButton button = null;
 
 		// Attempt to fix: https://github.com/facebook/react-native/issues/9979 (see my comment there)
 		synchronized (context)
 		{
-			button = new AppCompatButton(context);
+			button = new ReactButton(context);
 		}
 
 		button.setOnClickListener(new View.OnClickListener()
@@ -85,7 +95,7 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 	@ReactProp(name = "backgroundColor",
 	           defaultInt = Color.TRANSPARENT,
 	           customType = "Color")
-	public void setBackgroundColor(AppCompatButton button, int bgColor)
+	public void setBackgroundColor(ReactButton button, int bgColor)
 	{
 		if (bgColor == Color.TRANSPARENT && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 		{
@@ -96,30 +106,34 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 			{
 				button.setBackgroundResource(R.drawable.btn_default_material);
+				ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(bgColor));
 			}
-
-			ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(bgColor));
+			else
+			{
+				int[] colors = {darken(bgColor, 0.8d), bgColor};
+				ViewCompat.setBackgroundTintList(button, new ColorStateList(PRE_LOLLIPOP_BUTTON_STATES, colors));
+			}
 		}
 	}
 
 	@ReactProp(name = "color",
 	           defaultInt = Color.BLACK,
 	           customType = "Color")
-	public void setColor(AppCompatButton button, int textColor)
+	public void setColor(ReactButton button, int textColor)
 	{
 		button.setTextColor(textColor);
 	}
 
 	@ReactProp(name = ViewProps.ENABLED,
 	           defaultBoolean = true)
-	public void setEnabled(AppCompatButton button, boolean enabled)
+	public void setEnabled(ReactButton button, boolean enabled)
 	{
 		button.setEnabled(enabled);
 		button.setAlpha(enabled ? 1f : 0.3f);
 	}
 
 	@ReactProp(name = "fontFamily")
-	public void setFontFamily(AppCompatButton button, String fontFamily)
+	public void setFontFamily(ReactButton button, String fontFamily)
 	{
 		AssetManager assetManager = button.getContext().getAssets();
 		int style = Typeface.NORMAL;
@@ -136,15 +150,21 @@ public class ReactButtonManager extends SimpleViewManager<AppCompatButton>
 		button.setTypeface(typeface);
 	}
 
+	@ReactProp(name = "iconLeft")
+	public void setIconLeft(ReactButton button, @Nullable ReadableMap source)
+	{
+		button.setIconLeft(ImageHelper.getImageUri(source), ImageHelper.getImageInfo(source));
+	}
+
 	@ReactProp(name = "title")
-	public void setText(AppCompatButton button, @Nullable String title)
+	public void setText(ReactButton button, @Nullable String title)
 	{
 		button.setText(title);
 	}
 
 	@ReactProp(name = "textAllCaps",
 	           defaultBoolean = true)
-	public void setTextAllCaps(AppCompatButton button, boolean allCaps)
+	public void setTextAllCaps(ReactButton button, boolean allCaps)
 	{
 		button.setSupportAllCaps(allCaps);
 	}
