@@ -59,6 +59,7 @@ public class ReactButtonManager extends SimpleViewManager<ReactButton>
 			button = new ReactButton(context);
 		}
 
+		button.setSingleLine();
 		button.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
