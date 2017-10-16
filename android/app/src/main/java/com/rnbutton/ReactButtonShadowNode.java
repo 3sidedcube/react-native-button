@@ -1,6 +1,5 @@
 package com.rnbutton;
 
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -8,7 +7,7 @@ import com.facebook.react.uimanager.LayoutShadowNode;
 import com.facebook.yoga.YogaMeasureFunction;
 import com.facebook.yoga.YogaMeasureMode;
 import com.facebook.yoga.YogaMeasureOutput;
-import com.facebook.yoga.YogaNodeAPI;
+import com.facebook.yoga.YogaNode;
 
 /**
  * Created by tim on 19/08/2016.
@@ -25,7 +24,7 @@ public class ReactButtonShadowNode extends LayoutShadowNode implements YogaMeasu
 	}
 
 	@Override
-	public long measure(YogaNodeAPI node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
+	public long measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
 	{
 		if (!mMeasured)
 		{
