@@ -25,6 +25,14 @@
 #import "React/RCTUIManager.h"   // Required when used as a Pod in a Swift project
 #endif
 
+#if __has_include(<React/RCTShadowView+Layout.h>)
+#import <React/RCTShadowView+Layout.h>
+#elif __has_include("RCTShadowView+Layout.h")
+#import "RCTShadowView+Layout.h"
+#elif __has_include("React/RCTShadowView+Layout.h")
+#import "React/RCTShadowView+Layout.h"   // Required when used as a Pod in a Swift project
+#endif
+
 @interface RNShadowButton ()
 
 @property (nonatomic, strong) RNButton *button;
@@ -77,7 +85,7 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
 
 - (void)contentSizeMultiplierDidChange:(NSNotification *)note
 {
-    YGNodeMarkDirty(self.cssNode);
+    YGNodeMarkDirty(self.yogaNode);
     [self.button setNeedsLayout];
 }
 
