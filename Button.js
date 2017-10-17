@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {PropTypes} from "react";
+import React from "react";
 import {processColor, requireNativeComponent, Platform, StyleSheet, Text, View} from 'react-native';
 
 const ImageSourcePropType = require('ImageSourcePropType');
