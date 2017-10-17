@@ -6,6 +6,8 @@ import {processColor, requireNativeComponent, Platform, StyleSheet, Text, View} 
 const ImageSourcePropType = require('ImageSourcePropType');
 const resolveAssetSource = require('resolveAssetSource');
 
+import PropTypes from "prop-types";
+
 const Button = React.createClass({
 
 	propTypes: {
@@ -14,7 +16,7 @@ const Button = React.createClass({
 		/**
 		 * The alignment of the button image
 		 */
-		imageAlignment: React.PropTypes.oneOf([
+		imageAlignment: PropTypes.oneOf([
 			// Will be aligned to the left of the button with the title centered
 			'left',
 			// Will be aligned centrally with imageInsets between it and the title
@@ -29,31 +31,31 @@ const Button = React.createClass({
 		/**
 		 * The insets for the image on the button. iOS only
 		 */
-		imageInsets: React.PropTypes.shape({
-			bottom: React.PropTypes.number,
-			left: React.PropTypes.number,
-			right: React.PropTypes.number,
-			top: React.PropTypes.number
+		imageInsets: PropTypes.shape({
+			bottom: PropTypes.number,
+			left: PropTypes.number,
+			right: PropTypes.number,
+			top: PropTypes.number
 		}),
 
 		/**
 		 * The title of the button
 		 */
-		title: React.PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
 
 		/**
 		 * Whether the text should be in all caps
 		 */
-		textAllCaps: React.PropTypes.bool,
+		textAllCaps: PropTypes.bool,
 
 		/**
 		 * The insets for the title of the button. iOS only
 		 */
-		titleInsets: React.PropTypes.shape({
-			bottom: React.PropTypes.number,
-			left: React.PropTypes.number,
-			right: React.PropTypes.number,
-			top: React.PropTypes.number
+		titleInsets: PropTypes.shape({
+			bottom: PropTypes.number,
+			left: PropTypes.number,
+			right: PropTypes.number,
+			top: PropTypes.number
 		}),
 
 		/**
@@ -64,12 +66,12 @@ const Button = React.createClass({
 		/**
 		 * An callback when the button is pressed
 		 */
-		onPress: React.PropTypes.func,
+		onPress: PropTypes.func,
 
 		/**
 		 * Whether the button is enabled
 		 */
-		enabled: React.PropTypes.bool,
+		enabled: PropTypes.bool,
 	},
 
 	getDefaultProps() {
