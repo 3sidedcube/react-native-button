@@ -7,8 +7,9 @@ const ImageSourcePropType = require('ImageSourcePropType');
 const resolveAssetSource = require('resolveAssetSource');
 
 import PropTypes from "prop-types";
+import createReactClass from "create-react-class";
 
-const Button = React.createClass({
+const Button = createReactClass({
 
 	propTypes: {
 		...View.propTypes,
