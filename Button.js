@@ -1,7 +1,15 @@
 'use strict';
 
 import React from "react";
-import {processColor, requireNativeComponent, Platform, StyleSheet, Text, View} from 'react-native';
+import {
+	Platform,
+	processColor, 
+	requireNativeComponent,
+	StyleSheet,
+	Text,
+	View,
+	ViewPropTypes
+} from 'react-native';
 
 const ImageSourcePropType = require('ImageSourcePropType');
 const resolveAssetSource = require('resolveAssetSource');
@@ -12,7 +20,7 @@ import createReactClass from "create-react-class";
 const Button = createReactClass({
 
 	propTypes: {
-		...View.propTypes,
+		...ViewPropTypes,
 
 		/**
 		 * The alignment of the button image
