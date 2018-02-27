@@ -25,6 +25,14 @@
 #import "React/RCTUIManager.h"   // Required when used as a Pod in a Swift project
 #endif
 
+#if __has_include(<React/RCTShadowView+Layout.h>)
+#import <React/RCTShadowView+Layout.h>
+#elif __has_include("RCTShadowView+Layout.h")
+#import "RCTShadowView+Layout.h"
+#elif __has_include("React/RCTShadowView+Layout.h")
+#import "React/RCTShadowView+Layout.h"   // Required when used as a Pod in a Swift project
+#endif
+
 @interface RNShadowButton ()
 
 @property (nonatomic, strong) RNButton *button;
@@ -40,7 +48,7 @@
         self.button = [RNButton new];
         self.button.textColor = [UIColor blackColor];
         self.button.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        YGNodeSetMeasureFunc(self.cssNode, RCTMeasure);
+        YGNodeSetMeasureFunc(self.yogaNode, RCTMeasure);
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(contentSizeMultiplierDidChange:)
                                                      name:RCTUIManagerWillUpdateViewsDueToContentSizeMultiplierChangeNotification
@@ -77,7 +85,7 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
 
 - (void)contentSizeMultiplierDidChange:(NSNotification *)note
 {
-    YGNodeMarkDirty(self.cssNode);
+    YGNodeMarkDirty(self.yogaNode);
     [self.button setNeedsLayout];
 }
 
@@ -154,7 +162,7 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
     _image = image;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.button.image = [RCTConvert UIImage:image];
-        YGNodeMarkDirty(self.cssNode);
+        YGNodeMarkDirty(self.yogaNode);
         [self.button setNeedsLayout];
         [self dirtyPropagation];
     });
