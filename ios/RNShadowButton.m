@@ -133,28 +133,28 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
 {
     _font = font;
     [self.button setFont:font];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setTitle:(NSString *)title
 {
     _title = title;
     [self.button setTitle:title];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setTextColor:(UIColor *)textColor
 {
     _textColor = textColor;
     [self.button setTextColor:textColor];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setOnPress:(RCTBubblingEventBlock)onPress
 {
     _onPress = onPress;
     [self.button setOnPress:onPress];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setImage:(id)image
@@ -164,7 +164,7 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
         self.button.image = [RCTConvert UIImage:image];
         YGNodeMarkDirty(self.yogaNode);
         [self.button setNeedsLayout];
-        [self dirtyPropagation];
+        [self dirtyLayout];
     });
 }
 
@@ -172,27 +172,21 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
 {
     _imageInsets = imageInsets;
     self.button.imageEdgeInsets = imageInsets;
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setTitleInsets:(UIEdgeInsets)titleInsets
 {
     _titleInsets = titleInsets;
     self.button.titleEdgeInsets = titleInsets;
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setImageAlignment:(NSString *)imageAlignment
 {
     _imageAlignment = imageAlignment;
     self.button.imageAlignment = imageAlignment;
-    [self dirtyPropagation];
-}
-
-- (void)collectUpdatedProperties:(NSMutableSet<RCTApplierBlock> *)applierBlocks parentProperties:(NSDictionary<NSString *,id> *)parentProperties
-{
-    [super collectUpdatedProperties:applierBlocks parentProperties:parentProperties];
-    
+    [self dirtyLayout];
 }
 
 @end
