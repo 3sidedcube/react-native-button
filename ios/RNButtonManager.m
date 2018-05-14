@@ -13,14 +13,23 @@
 #import <React/RCTFont.h>
 #import <React/RCTConvert.h>
 #import "RNShadowButton.h"
+#import <React/RCTUIManager.h>
+#import <React/RCTUIManagerUtils.h>
+#import <React/RCTUIManagerObserverCoordinator.h>
 
-@implementation RNButtonManager
+@interface RNButtonManager() <RCTUIManagerObserver>
+
+@end
+
+@implementation RNButtonManager {
+    NSHashTable<RNShadowButton *> *_shadowViews;
+}
 
 RCT_EXPORT_VIEW_PROPERTY(enabled, BOOL)
 
 RCT_EXPORT_SHADOW_PROPERTY(title, NSString *)
 RCT_EXPORT_SHADOW_PROPERTY(textColor, UIColor *)
-RCT_EXPORT_SHADOW_PROPERTY(onPress, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 RCT_EXPORT_SHADOW_PROPERTY(image, id);
 RCT_EXPORT_SHADOW_PROPERTY(imageAlignment, NSString *);
 
@@ -60,6 +69,13 @@ RCT_EXPORT_MODULE()
     return button;
 }
 
+- (void)setBridge:(RCTBridge *)bridge
+{
+    [super setBridge:bridge];
+    _shadowViews = [NSHashTable weakObjectsHashTable];
+    [bridge.uiManager.observerCoordinator addObserver:self];
+}
+
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
@@ -67,7 +83,9 @@ RCT_EXPORT_MODULE()
 
 - (RCTShadowView *)shadowView
 {
-    return [RNShadowButton new];
+    RNShadowButton *shadowView = [[RNShadowButton alloc] initWithBridge:self.bridge];
+    [_shadowViews addObject:shadowView];
+    return shadowView;
 }
 
 - (void)handleButtonPress:(RNButton *)sender
@@ -75,6 +93,13 @@ RCT_EXPORT_MODULE()
 	if (sender.onPress) {
     	sender.onPress(@{});
 	}
+}
+
+- (void)uiManagerWillPerformMounting:(__unused RCTUIManager *)uiManager
+{
+    for (RNShadowButton *shadowView in _shadowViews) {
+        [shadowView uiManagerWillPerformMounting];
+    }
 }
 
 @end

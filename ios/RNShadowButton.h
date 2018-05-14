@@ -18,11 +18,11 @@
 
 @interface RNShadowButton : RCTShadowView
 
+- initWithBridge:(RCTBridge *)bridge;
+
 @property (nonatomic, copy) NSString *title;
 
 @property (nonatomic, strong) UIColor *textColor;
-
-@property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
 @property (nonatomic, strong) UIFont *font;
 
@@ -33,5 +33,7 @@
 @property (nonatomic, assign) UIEdgeInsets imageInsets;
 
 @property (nonatomic, copy) NSString *imageAlignment;
+
+- (void)uiManagerWillPerformMounting;
 
 @end
