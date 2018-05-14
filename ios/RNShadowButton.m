@@ -89,46 +89,6 @@ static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, f
     [self.button setNeedsLayout];
 }
 
-- (NSDictionary<NSString *,id> *)processUpdatedProperties:(NSMutableSet<RCTApplierBlock> *)applierBlocks parentProperties:(NSDictionary<NSString *,id> *)parentProperties
-{
-    parentProperties = [super processUpdatedProperties:applierBlocks parentProperties:parentProperties];
-    
-    __weak typeof(self) welf = self;
-    
-    UIEdgeInsets padding = self.paddingAsInsets;
-    
-    [applierBlocks addObject:^(NSDictionary<NSNumber *, UIView *> *viewRegistry) {
-        
-        RNButton *button = (RNButton *)viewRegistry[self.reactTag];
-        
-        [UIView transitionWithView:button duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-
-            button.onPress = welf.onPress;
-            if (welf.font) {
-                button.font = welf.font;
-            }
-            if (welf.textColor) {
-                button.textColor = welf.textColor;
-            }
-            if (welf.title) {
-                button.title = welf.title;
-            }
-            if (welf.image) {
-                button.image = [RCTConvert UIImage:welf.image];
-            } else {
-                button.image = nil;
-            }
-            button.titleEdgeInsets = welf.titleInsets;
-            button.imageEdgeInsets = welf.imageInsets;
-            button.imageAlignment = welf.imageAlignment;
-            button.padding = padding;
-            
-        } completion:nil];
-    }];
-    
-    return parentProperties;
-}
-
 - (void)setFont:(UIFont *)font
 {
     _font = font;
