@@ -99,8 +99,12 @@ static YGSize RNShadowButtonMeasure(YGNodeRef node, float width, YGMeasureMode w
     
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString: shadowButton.title ? : @"" attributes:@{NSFontAttributeName : shadowButton.font ? : [UIFont systemFontOfSize:17]}];
     
-    NSLayoutManager *layoutManager = textStorage.layoutManagers.firstObject;
-    NSTextContainer *textContainer = layoutManager.textContainers.firstObject;
+    NSLayoutManager *layoutManager = [NSLayoutManager new];
+    [textStorage addLayoutManager:layoutManager];
+    
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:maximumSize];
+    [layoutManager addTextContainer:textContainer];
+    
     [layoutManager ensureLayoutForTextContainer:textContainer];
     CGSize size = [layoutManager usedRectForTextContainer:textContainer].size;
     
