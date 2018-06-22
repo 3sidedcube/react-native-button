@@ -3,7 +3,7 @@
 import React from "react";
 import {
 	Platform,
-	processColor, 
+	processColor,
 	requireNativeComponent,
 	StyleSheet,
 	Text,
@@ -153,11 +153,11 @@ const Button = createReactClass({
 
 if (Platform.OS === "ios") {
 	var ButtonNative = requireNativeComponent('RNButton', Button, {
-  		nativeOnly: { 
+  		nativeOnly: {
   			textColor: true,
   			backgroundColor: true,
   			fontFamily: true,
-  			fontWeight: true 
+  			fontWeight: true
   		}
 	});
 } else if (Platform.OS === "android") {

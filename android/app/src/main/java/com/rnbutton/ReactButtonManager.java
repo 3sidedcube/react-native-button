@@ -10,7 +10,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
-
+import android.view.ViewGroup;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.LayoutShadowNode;
@@ -57,6 +57,7 @@ public class ReactButtonManager extends SimpleViewManager<ReactButton>
 		synchronized (context)
 		{
 			button = new ReactButton(context);
+			button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		}
 
 		button.setSingleLine();
