@@ -80,7 +80,13 @@
         
         button.title = self.title;
         button.font = self.font;
-        button.image = self.image;
+        
+        if (self.image) {
+            button.image = [RCTConvert UIImage:self.image];
+        } else {
+            button.image = nil;
+        }
+
         button.titleEdgeInsets = self.titleInsets;
         button.imageEdgeInsets = self.imageInsets;
         button.imageAlignment = self.imageAlignment;
