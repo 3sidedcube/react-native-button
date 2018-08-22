@@ -146,6 +146,8 @@ public class ReactButtonManager extends SimpleViewManager<ReactButton>
 			style = prevTypeface.getStyle();
 		}
 
+		style = Typeface.BOLD; // TODO: Hardcoding this temporarily
+
 		Typeface typeface = ReactFontManager.getInstance().getTypeface(fontFamily, style, assetManager);
 		button.setTypeface(typeface);
 	}

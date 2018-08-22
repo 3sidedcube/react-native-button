@@ -35,20 +35,19 @@
 
 @interface RNShadowButton ()
 
-@property (nonatomic, strong) RNButton *button;
-
 @end
 
 @implementation RNShadowButton
+{
+    __weak RCTBridge *_bridge;
+}
 
-- (instancetype)init
+- (instancetype)initWithBridge:(RCTBridge *)bridge
 {
     if ((self = [super init])) {
-        
-        self.button = [RNButton new];
-        self.button.textColor = [UIColor blackColor];
-        self.button.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        YGNodeSetMeasureFunc(self.yogaNode, RCTMeasure);
+      
+        _bridge = bridge;
+        YGNodeSetMeasureFunc(self.yogaNode, RNShadowButtonMeasure);
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(contentSizeMultiplierDidChange:)
                                                      name:RCTUIManagerWillUpdateViewsDueToContentSizeMultiplierChangeNotification
@@ -63,136 +62,124 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (BOOL)isCSSLeafNode
+- (BOOL)isYogaLeafNode
 {
     return true;
 }
 
-static YGSize RCTMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode)
+- (void)uiManagerWillPerformMounting
 {
+    NSNumber *tag = self.reactTag;
+    
+    [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+        
+        RNButton *button = (RNButton *)viewRegistry[tag];
+        if (!button) {
+            return;
+        }
+        
+        button.title = self.title;
+        button.font = self.font;
+        
+        if (self.image) {
+            button.image = [RCTConvert UIImage:self.image];
+        } else {
+            button.image = nil;
+        }
+
+        button.titleEdgeInsets = self.titleInsets;
+        button.imageEdgeInsets = self.imageInsets;
+        button.imageAlignment = self.imageAlignment;
+        button.textColor = self.textColor;
+    }];
+}
+
+static YGSize RNShadowButtonMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode)
+{
+    CGSize maximumSize = (CGSize){
+        widthMode == YGMeasureModeUndefined ? CGFLOAT_MAX : RCTCoreGraphicsFloatFromYogaFloat(width),
+        heightMode == YGMeasureModeUndefined ? CGFLOAT_MAX : RCTCoreGraphicsFloatFromYogaFloat(height),
+    };
+    
     RNShadowButton *shadowButton = (__bridge RNShadowButton *)YGNodeGetContext(node);
     
-    [shadowButton.button sizeToFit];
+    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString: shadowButton.title ? : @"" attributes:@{NSFontAttributeName : shadowButton.font ? : [UIFont systemFontOfSize:17]}];
     
-    CGSize computedSize = shadowButton.button.frame.size;
+    NSLayoutManager *layoutManager = [NSLayoutManager new];
+    [textStorage addLayoutManager:layoutManager];
     
-    YGSize result;
-    result.width = RCTCeilPixelValue(computedSize.width);
-    result.height = RCTCeilPixelValue(computedSize.height);
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:maximumSize];
+    [layoutManager addTextContainer:textContainer];
     
-    return result;
+    [layoutManager ensureLayoutForTextContainer:textContainer];
+    CGSize size = [layoutManager usedRectForTextContainer:textContainer].size;
+    
+    size = (CGSize){
+        MIN(RCTCeilPixelValue(size.width), maximumSize.width),
+        MIN(RCTCeilPixelValue(size.height), maximumSize.height)
+    };
+    
+    // Adding epsilon value illuminates problems with converting values from
+    // `double` to `float`, and then rounding them to pixel grid in Yoga.
+    CGFloat epsilon = 0.001;
+    return (YGSize){
+        RCTYogaFloatFromCoreGraphicsFloat(size.width + epsilon),
+        RCTYogaFloatFromCoreGraphicsFloat(size.height + epsilon)
+    };
+}
+
+- (void)dirtyLayout
+{
+    [super dirtyLayout];
 }
 
 - (void)contentSizeMultiplierDidChange:(NSNotification *)note
 {
-    YGNodeMarkDirty(self.yogaNode);
-    [self.button setNeedsLayout];
-}
-
-- (NSDictionary<NSString *,id> *)processUpdatedProperties:(NSMutableSet<RCTApplierBlock> *)applierBlocks parentProperties:(NSDictionary<NSString *,id> *)parentProperties
-{
-    parentProperties = [super processUpdatedProperties:applierBlocks parentProperties:parentProperties];
-    
-    __weak typeof(self) welf = self;
-    
-    UIEdgeInsets padding = self.paddingAsInsets;
-    
-    [applierBlocks addObject:^(NSDictionary<NSNumber *, UIView *> *viewRegistry) {
-        
-        RNButton *button = (RNButton *)viewRegistry[self.reactTag];
-        
-        [UIView transitionWithView:button duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-
-            button.onPress = welf.onPress;
-            if (welf.font) {
-                button.font = welf.font;
-            }
-            if (welf.textColor) {
-                button.textColor = welf.textColor;
-            }
-            if (welf.title) {
-                button.title = welf.title;
-            }
-            if (welf.image) {
-                button.image = [RCTConvert UIImage:welf.image];
-            } else {
-                button.image = nil;
-            }
-            button.titleEdgeInsets = welf.titleInsets;
-            button.imageEdgeInsets = welf.imageInsets;
-            button.imageAlignment = welf.imageAlignment;
-            button.padding = padding;
-            
-        } completion:nil];
-    }];
-    
-    return parentProperties;
+    [self dirtyLayout];
 }
 
 - (void)setFont:(UIFont *)font
 {
     _font = font;
-    [self.button setFont:font];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setTitle:(NSString *)title
 {
     _title = title;
-    [self.button setTitle:title];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setTextColor:(UIColor *)textColor
 {
     _textColor = textColor;
-    [self.button setTextColor:textColor];
-    [self dirtyPropagation];
-}
-
-- (void)setOnPress:(RCTBubblingEventBlock)onPress
-{
-    _onPress = onPress;
-    [self.button setOnPress:onPress];
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setImage:(id)image
 {
     _image = image;
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.button.image = [RCTConvert UIImage:image];
-        YGNodeMarkDirty(self.yogaNode);
-        [self.button setNeedsLayout];
-        [self dirtyPropagation];
+        [self dirtyLayout];
     });
 }
 
 - (void)setImageInsets:(UIEdgeInsets)imageInsets
 {
     _imageInsets = imageInsets;
-    self.button.imageEdgeInsets = imageInsets;
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setTitleInsets:(UIEdgeInsets)titleInsets
 {
     _titleInsets = titleInsets;
-    self.button.titleEdgeInsets = titleInsets;
-    [self dirtyPropagation];
+    [self dirtyLayout];
 }
 
 - (void)setImageAlignment:(NSString *)imageAlignment
 {
     _imageAlignment = imageAlignment;
-    self.button.imageAlignment = imageAlignment;
-    [self dirtyPropagation];
-}
-
-- (void)collectUpdatedProperties:(NSMutableSet<RCTApplierBlock> *)applierBlocks parentProperties:(NSDictionary<NSString *,id> *)parentProperties
-{
-    [super collectUpdatedProperties:applierBlocks parentProperties:parentProperties];
-    
+    [self dirtyLayout];
 }
 
 @end
