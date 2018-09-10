@@ -10,6 +10,9 @@
 		13BE3DEE1AC21097009241FE /* RNButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* RNButton.m */; };
 		B15C8C291CE334BD001601A4 /* RNButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B15C8C281CE334BD001601A4 /* RNButtonManager.m */; };
 		B1D92F911E5EF91700A985F0 /* RNShadowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D92F901E5EF91700A985F0 /* RNShadowButton.m */; };
+		B1E68A7A2146C38100B55D71 /* RNShadowPaymentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E68A752146C38000B55D71 /* RNShadowPaymentButton.m */; };
+		B1E68A7B2146C38100B55D71 /* RNPaymentButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E68A782146C38100B55D71 /* RNPaymentButtonManager.m */; };
+		B1E68A7C2146C38100B55D71 /* RNPaymentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E68A792146C38100B55D71 /* RNPaymentButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +35,12 @@
 		B15C8C281CE334BD001601A4 /* RNButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNButtonManager.m; sourceTree = "<group>"; };
 		B1D92F8F1E5EF91700A985F0 /* RNShadowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNShadowButton.h; sourceTree = "<group>"; };
 		B1D92F901E5EF91700A985F0 /* RNShadowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNShadowButton.m; sourceTree = "<group>"; };
+		B1E68A742146C38000B55D71 /* RNShadowPaymentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNShadowPaymentButton.h; sourceTree = "<group>"; };
+		B1E68A752146C38000B55D71 /* RNShadowPaymentButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNShadowPaymentButton.m; sourceTree = "<group>"; };
+		B1E68A762146C38000B55D71 /* RNPaymentButtonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPaymentButtonManager.h; sourceTree = "<group>"; };
+		B1E68A772146C38100B55D71 /* RNPaymentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPaymentButton.h; sourceTree = "<group>"; };
+		B1E68A782146C38100B55D71 /* RNPaymentButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPaymentButtonManager.m; sourceTree = "<group>"; };
+		B1E68A792146C38100B55D71 /* RNPaymentButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPaymentButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +71,12 @@
 				13BE3DED1AC21097009241FE /* RNButton.m */,
 				B1D92F8F1E5EF91700A985F0 /* RNShadowButton.h */,
 				B1D92F901E5EF91700A985F0 /* RNShadowButton.m */,
+				B1E68A762146C38000B55D71 /* RNPaymentButtonManager.h */,
+				B1E68A782146C38100B55D71 /* RNPaymentButtonManager.m */,
+				B1E68A772146C38100B55D71 /* RNPaymentButton.h */,
+				B1E68A792146C38100B55D71 /* RNPaymentButton.m */,
+				B1E68A742146C38000B55D71 /* RNShadowPaymentButton.h */,
+				B1E68A752146C38000B55D71 /* RNShadowPaymentButton.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,7 +139,10 @@
 			files = (
 				B15C8C291CE334BD001601A4 /* RNButtonManager.m in Sources */,
 				13BE3DEE1AC21097009241FE /* RNButton.m in Sources */,
+				B1E68A7C2146C38100B55D71 /* RNPaymentButton.m in Sources */,
+				B1E68A7A2146C38100B55D71 /* RNShadowPaymentButton.m in Sources */,
 				B1D92F911E5EF91700A985F0 /* RNShadowButton.m in Sources */,
+				B1E68A7B2146C38100B55D71 /* RNPaymentButtonManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
