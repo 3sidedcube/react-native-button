@@ -40,6 +40,7 @@
 @implementation RNShadowPaymentButton
 {
     __weak RCTBridge *_bridge;
+    BOOL _needsUpdateView;
 }
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge
@@ -61,6 +62,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)dirtyLayout
+{
+    _needsUpdateView = true;
+    [super dirtyLayout];
+}
+
 - (BOOL)isYogaLeafNode
 {
     return true;
@@ -68,6 +75,15 @@
 
 - (void)uiManagerWillPerformMounting
 {
+    if (YGNodeIsDirty(self.yogaNode)) {
+        return;
+    }
+    
+    if (!_needsUpdateView) {
+        return;
+    }
+    _needsUpdateView = NO;
+    
     NSNumber *tag = self.reactTag;
     
     [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
