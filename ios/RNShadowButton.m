@@ -40,6 +40,7 @@
 @implementation RNShadowButton
 {
     __weak RCTBridge *_bridge;
+    BOOL _needsUpdateView;
 }
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge
@@ -69,6 +70,15 @@
 
 - (void)uiManagerWillPerformMounting
 {
+    if (YGNodeIsDirty(self.yogaNode)) {
+        return;
+    }
+    
+    if (!_needsUpdateView) {
+        return;
+    }
+    _needsUpdateView = NO;
+    
     NSNumber *tag = self.reactTag;
     
     [_bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
@@ -130,6 +140,7 @@ static YGSize RNShadowButtonMeasure(YGNodeRef node, float width, YGMeasureMode w
 
 - (void)dirtyLayout
 {
+    _needsUpdateView = true;
     [super dirtyLayout];
 }
 
@@ -159,9 +170,9 @@ static YGSize RNShadowButtonMeasure(YGNodeRef node, float width, YGMeasureMode w
 - (void)setImage:(id)image
 {
     _image = image;
-    dispatch_async(dispatch_get_main_queue(), ^{
+//    dispatch_async(dispatch_get_main_queue(), ^{
         [self dirtyLayout];
-    });
+//    });
 }
 
 - (void)setImageInsets:(UIEdgeInsets)imageInsets

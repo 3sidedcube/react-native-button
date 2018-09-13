@@ -26,6 +26,6 @@ public class ReactButtonPackage implements ReactPackage
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext)
     {
-        return Arrays.<ViewManager>asList(new ReactButtonManager());
+        return Arrays.<ViewManager>asList(new ReactButtonManager(), new ReactPaymentButtonManager());
     }
 }

@@ -1,7 +1,5 @@
 package com.rnbutton;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -9,17 +7,13 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.view.View;
 import android.view.ViewGroup;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.LayoutShadowNode;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewProps;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.react.views.text.ReactFontManager;
 
 public class ReactButtonManager extends SimpleViewManager<ReactButton>
@@ -61,29 +55,6 @@ public class ReactButtonManager extends SimpleViewManager<ReactButton>
 		}
 
 		button.setSingleLine();
-		button.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Context baseContext = v.getContext();
-
-				while (baseContext instanceof ContextWrapper)
-				{
-					if (baseContext instanceof ReactContext)
-					{
-						ReactContext reactContext = (ReactContext) baseContext;
-						EventDispatcher eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
-						eventDispatcher.dispatchEvent(new OnClickEvent(v.getId(), null));
-						break;
-					}
-					else
-					{
-						baseContext = ((ContextWrapper) baseContext).getBaseContext();
-					}
-				}
-			}
-		});
 		return button;
 	}
 
