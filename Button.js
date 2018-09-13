@@ -1,24 +1,15 @@
-'use strict';
+"use strict";
 
 import React from "react";
-import {
-	Platform,
-	processColor,
-	requireNativeComponent,
-	StyleSheet,
-	Text,
-	View,
-	ViewPropTypes
-} from 'react-native';
+import { Platform, processColor, requireNativeComponent, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 
-const ImageSourcePropType = require('ImageSourcePropType');
-const resolveAssetSource = require('resolveAssetSource');
+const ImageSourcePropType = require("ImageSourcePropType");
+const resolveAssetSource = require("resolveAssetSource");
 
 import PropTypes from "prop-types";
 import createReactClass from "create-react-class";
 
 const Button = createReactClass({
-
 	propTypes: {
 		...ViewPropTypes,
 
@@ -27,9 +18,9 @@ const Button = createReactClass({
 		 */
 		imageAlignment: PropTypes.oneOf([
 			// Will be aligned to the left of the button with the title centered
-			'left',
+			"left",
 			// Will be aligned centrally with imageInsets between it and the title
-			'center'
+			"center"
 		]),
 
 		/**
@@ -80,13 +71,13 @@ const Button = createReactClass({
 		/**
 		 * Whether the button is enabled
 		 */
-		enabled: PropTypes.bool,
+		enabled: PropTypes.bool
 	},
 
 	getDefaultProps() {
 		return {
-			imageAlignment: 'center'
-		}
+			imageAlignment: "center"
+		};
 	},
 
 	/**
@@ -112,7 +103,6 @@ const Button = createReactClass({
 				/>
 			);
 		} else if (Platform.OS === "ios") {
-
 			const passProps = {
 				...this.props
 			};
@@ -142,26 +132,24 @@ const Button = createReactClass({
 				passProps.title = passProps.title.toUpperCase();
 			}
 
-			passProps.onStartShouldSetResponder = (event) => true;
-			passProps.onMoveShouldSetResponder = (event) => true;
-			return (
-				<ButtonNative {...passProps} onPress={this._onPress}/>
-			);
+			passProps.onStartShouldSetResponder = event => true;
+			passProps.onMoveShouldSetResponder = event => true;
+			return <ButtonNative {...passProps} onPress={this._onPress} />;
 		}
 	}
 });
 
 if (Platform.OS === "ios") {
-	var ButtonNative = requireNativeComponent('RNButton', Button, {
-  		nativeOnly: {
-  			textColor: true,
-  			backgroundColor: true,
-  			fontFamily: true,
-  			fontWeight: true
-  		}
+	var ButtonNative = requireNativeComponent("RNButton", Button, {
+		nativeOnly: {
+			textColor: true,
+			backgroundColor: true,
+			fontFamily: true,
+			fontWeight: true
+		}
 	});
 } else if (Platform.OS === "android") {
-	var ButtonNative = requireNativeComponent('RNButton', Button, {
+	var ButtonNative = requireNativeComponent("RNButton", Button, {
 		nativeOnly: {
 			iconLeft: true
 		}

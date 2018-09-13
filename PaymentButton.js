@@ -1,16 +1,14 @@
+import { requireNativeComponent, Platform, ViewPropTypes, TouchableWithoutFeedback } from "react-native";
 
-import {requireNativeComponent, Platform, NativeModules, View} from 'react-native';
-
-'use strict';
+("use strict");
 
 import React from "react";
 import PropTypes from "prop-types";
 import createReactClass from "create-react-class";
 
 const PaymentButton = createReactClass({
-
 	propTypes: {
-		...View.propTypes,
+		...ViewPropTypes,
 
 		/**
 		 * Whether the button is enabled
@@ -23,7 +21,7 @@ const PaymentButton = createReactClass({
 		onPress: PropTypes.func,
 
 		/**
-		 * The type of button to display this as
+		 * The type of button to display this as (iOS-only)
 		 *
 		 * Note:
 		 * - setup is only available iOS > 9.0
@@ -31,19 +29,19 @@ const PaymentButton = createReactClass({
 		 * - donate is only available iOS > 10.3
 		 * Providing an unavailable option will fall back to `plain`
 		 */
-		type: PropTypes.oneOf(['plain','buy','setup','inStore','donate']),
+		type: PropTypes.oneOf(["plain", "buy", "setup", "inStore", "donate"]),
 
 		/**
-		 * The style of the Apple Pay button
+		 * The style of the Native Pay button
 		 */
-		buttonStyle: PropTypes.oneOf(['black','white','whiteOutline'])
+		buttonStyle: PropTypes.oneOf(["black", "white", "whiteOutline"])
 	},
 
 	getDefaultProps() {
 		return {
-			type: 'plain',
-			buttonStyle: 'black'
-		}
+			type: "plain",
+			buttonStyle: "black"
+		};
 	},
 
 	_onPress() {
@@ -51,17 +49,18 @@ const PaymentButton = createReactClass({
 	},
 
 	render() {
-
 		if (Platform.OS === "android") {
-			return null;
-		} else if (Platform.OS === "ios") {
 			return (
-				<ButtonNative {...this.props} onPress={this._onPress}/>
+				<TouchableWithoutFeedback onPress={this._onPress}>
+					<ButtonNative {...this.props} />
+				</TouchableWithoutFeedback>
 			);
+		} else if (Platform.OS === "ios") {
+			return <ButtonNative {...this.props} style={[this.props.style, { height: 44 }]} onPress={this._onPress} />;
 		}
 	}
 });
 
-var ButtonNative = requireNativeComponent('RNPaymentButton', PaymentButton);
+const ButtonNative = requireNativeComponent("RNPaymentButton", PaymentButton);
 
 module.exports = PaymentButton;
