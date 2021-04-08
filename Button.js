@@ -1,10 +1,9 @@
 "use strict";
 
 import React from "react";
-import { Platform, processColor, requireNativeComponent, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, processColor, requireNativeComponent, StyleSheet, Text, View, ViewPropTypes, Image } from "react-native";
 
-const ImageSourcePropType = require("ImageSourcePropType");
-const resolveAssetSource = require("resolveAssetSource");
+import ImageSourcePropType from "react-native/Libraries/DeprecatedPropTypes/DeprecatedImageSourcePropType";
 
 import PropTypes from "prop-types";
 import createReactClass from "create-react-class";
@@ -90,7 +89,7 @@ const Button = createReactClass({
 	},
 
 	render() {
-		const resolvedImage = this.props.image ? resolveAssetSource(this.props.image) : undefined;
+		const resolvedImage = this.props.image ? Image.resolveAssetSource(this.props.image) : undefined;
 
 		if (Platform.OS === "android") {
 			const iconLeft = resolvedImage;
